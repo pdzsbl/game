@@ -30,7 +30,7 @@ bool HelpScene::init()
 	auto backItem = MenuItemImage::create(
 		"HelpScene/BackNormal.png",
 		"HelpScene/BackSelected.png",
-		CC_CALLBACK_1(HelpScene::menuCallBack, this));
+		CC_CALLBACK_1(HelpScene::menuBackCallBack, this));
 	auto menu = Menu::createWithItem(backItem);
 	menu->setPosition(
 		Point(visibleSize.width*0.5f, visibleSize.height*0.2f));
@@ -46,10 +46,10 @@ void HelpScene::createParagraph()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
 	std::string helps[] = {
-		"You must have seen this before.",
+		"You must have seen this game before.\n",
 		"Use arrow keys to move your character.",
 		"Use space to place some bubbles.",
-		"ENJOY YOURSELF!" };
+		"\nENJOY YOURSELF!" };
 	Vector<MenuItem *> menuItems;
 
 	auto num = sizeof(helps) / sizeof(helps[0]);
@@ -59,7 +59,7 @@ void HelpScene::createParagraph()
 		auto menuItem = MenuItemLabel::create(label);
 
 		if (i == num - 1) {
-			menuItem->setScale(1.25f);
+			menuItem->setScale(2.0f);
 		}
 		menuItems.pushBack(menuItem);
 	}
@@ -71,7 +71,7 @@ void HelpScene::createParagraph()
 	this->addChild(menu, 1);
 }
 
-void HelpScene::menuCallBack(Ref * pSender)
+void HelpScene::menuBackCallBack(Ref * pSender)
 {
 	Director::getInstance()->popScene();
 }

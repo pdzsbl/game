@@ -10,7 +10,7 @@ public:
 
 	void createParagraph();						//生成一段话的Label
 
-	void menuCallBack(cocos2d::Ref * pSender);
+	void menuBackCallBack(cocos2d::Ref * pSender);
 
 	CREATE_FUNC(HelpScene);						//create()
 };

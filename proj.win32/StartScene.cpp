@@ -31,13 +31,12 @@ bool StartScene::init()
 	backGround->setPosition(visibleSize / 2);
 	this->addChild(backGround, 0);
 
-	_menus = this->createMenuList();
-	this->addChild(_menus, 1);
+	this->createMenuList();
 
 	return true;
 }
 
-Menu * StartScene::createMenuList()
+void StartScene::createMenuList()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = cocos2d::Director::getInstance()->getVisibleOrigin();
@@ -50,10 +49,10 @@ Menu * StartScene::createMenuList()
 		"Quit" };
 	ccMenuCallback Uifuncs[] = { 
 		nullptr,
-		CC_CALLBACK_1(StartScene::callBackStart, this), 
-		CC_CALLBACK_1(StartScene::callBackSettings,this),
-		CC_CALLBACK_1(StartScene::callBackHelp, this),
-		CC_CALLBACK_1(StartScene::callBackClose, this) };
+		CC_CALLBACK_1(StartScene::menuStartCallBack, this), 
+		CC_CALLBACK_1(StartScene::menuSettingsCallBack,this),
+		CC_CALLBACK_1(StartScene::menuHelpCallBack, this),
+		CC_CALLBACK_1(StartScene::menuCloseCallBack, this) };
 	Vector<MenuItem *> buttons;
 
 	auto frameCache = SpriteFrameCache::getInstance();
@@ -76,25 +75,24 @@ Menu * StartScene::createMenuList()
 		buttons.pushBack(menuItem);
 	}
 
-	_menus = Menu::createWithArray(buttons);
-	_menus->setPosition(Point(visibleSize.width*0.5f, visibleSize.height*0.6f));
-	_menus->alignItemsVertically();
-
-	return _menus;
+	auto menu = Menu::createWithArray(buttons);
+	menu->setPosition(Point(visibleSize.width*0.5f, visibleSize.height*0.6f));
+	menu->alignItemsVertically();
+	this->addChild(menu);
 }
 
-void StartScene::callBackStart(Ref * pSender)
+void StartScene::menuStartCallBack(Ref * pSender)
 {
 }
-void StartScene::callBackSettings(Ref * pSender)
+void StartScene::menuSettingsCallBack(Ref * pSender)
 {
 }
-void StartScene::callBackHelp(Ref * pSender)
+void StartScene::menuHelpCallBack(Ref * pSender)
 {
 	Director::getInstance()->pushScene(HelpScene::createScene());
 //	Director::getInstance()->replaceScene(HelpScene::createScene());
 }
-void StartScene::callBackClose(Ref * pSender)
+void StartScene::menuCloseCallBack(Ref * pSender)
 {
 	Director::getInstance()->end();
 }
