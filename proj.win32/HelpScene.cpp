@@ -31,6 +31,7 @@ bool HelpScene::init()
 		"HelpScene/BackNormal.png",
 		"HelpScene/BackSelected.png",
 		CC_CALLBACK_1(HelpScene::menuBackCallBack, this));
+	backItem->setScale(0.5f);
 	auto menu = Menu::createWithItem(backItem);
 	menu->setPosition(
 		Point(visibleSize.width*0.5f, visibleSize.height*0.2f));
@@ -46,10 +47,10 @@ void HelpScene::createParagraph()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
 	std::string helps[] = {
-		"You must have seen this game before.\n",
+		"You must have seen this game before.",
 		"Use arrow keys to move your character.",
 		"Use space to place some bubbles.",
-		"\nENJOY YOURSELF!" };
+		"ENJOY YOURSELF!" };
 	Vector<MenuItem *> menuItems;
 
 	auto num = sizeof(helps) / sizeof(helps[0]);
@@ -58,6 +59,9 @@ void HelpScene::createParagraph()
 		label->setColor(Color3B::ORANGE);
 		auto menuItem = MenuItemLabel::create(label);
 
+		if (i == 0) {
+			menuItem->setScale(1.25f);
+		}
 		if (i == num - 1) {
 			menuItem->setScale(2.0f);
 		}

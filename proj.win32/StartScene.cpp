@@ -1,5 +1,6 @@
 #include"StartScene.h"
 
+#include"SettingsScene.h"
 #include"HelpScene.h"
 
 USING_NS_CC;
@@ -86,6 +87,7 @@ void StartScene::menuStartCallBack(Ref * pSender)
 }
 void StartScene::menuSettingsCallBack(Ref * pSender)
 {
+	Director::getInstance()->pushScene(SettingsScene::createScene());
 }
 void StartScene::menuHelpCallBack(Ref * pSender)
 {

@@ -10,7 +10,7 @@ public:
 
 	void createMenuList();
 
-	void callBack();
+	void menuSaveCallBack(cocos2d::Ref * pSender);
 
 	CREATE_FUNC(SettingsScene);
 };
