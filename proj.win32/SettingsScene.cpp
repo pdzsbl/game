@@ -1,5 +1,7 @@
 #include"SettingsScene.h"
 
+#include"MyAudioEngine.h"
+
 USING_NS_CC;
 
 Scene * SettingsScene::createScene()
@@ -39,14 +41,19 @@ bool SettingsScene::init()
 
 	this->createMenuList();
 
+	this->addChild(MyAudioEngine::create());
+	this->addChild(AudioControl::create());
+
 	return true;
 }
 
 void SettingsScene::createMenuList()
 {
 	std::string UiNames[] = {
-		""
-	};
+		"BackGroundMusic",
+		"SoundEffect" };
+	
+
 }
 
 void SettingsScene::menuSaveCallBack(Ref * pSender)
