@@ -1,5 +1,8 @@
 #include"HelpScene.h"
 
+#include"SimpleAudioEngine.h"
+#include"SwallowTouch.h"
+
 USING_NS_CC;
 
 bool HelpScene::init()
@@ -10,6 +13,8 @@ bool HelpScene::init()
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
+
+	this->addChild(SwallowTouch::create());
 
 	auto backGround = Sprite::create("HelpScene/HelpSceneBG.png");
 	backGround->setScale(1.6f);
@@ -28,6 +33,7 @@ bool HelpScene::init()
 	this->addChild(menu);
 
 	this->createParagraph();
+
 
 	return true;
 }
@@ -67,5 +73,7 @@ void HelpScene::createParagraph()
 
 void HelpScene::menuBackCallBack(Ref * pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->
+		playEffect("SoundEffect/lay.wav");
 	this->removeFromParentAndCleanup(true);
 }

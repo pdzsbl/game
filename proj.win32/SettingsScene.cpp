@@ -1,7 +1,9 @@
 #include"SettingsScene.h"
 
+#include"SimpleAudioEngine.h"
 #include"StartScene.h"
 #include"MyAudioEngine.h"
+#include"SwallowTouch.h"
 
 USING_NS_CC;
 
@@ -24,10 +26,12 @@ bool SettingsScene::init()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 
+	this->addChild(SwallowTouch::create());
+
 	auto backGround = Sprite::create("HelpScene/HelpSceneBG.png");
 	backGround->setScale(1.6f);
 	backGround->setPosition(visibleSize / 2);
-	backGround->setOpacity(100);
+	backGround->setOpacity(255);
 	this->addChild(backGround, 0);
 
 	auto saveItem = MenuItemImage::create(
@@ -41,10 +45,9 @@ bool SettingsScene::init()
 	this->addChild(menu);
 
 	this->createMenuList();
-
-	this->addChild(MyAudioEngine::create());
+	
 	this->addChild(AudioControl::create());
-
+	
 	return true;
 }
 
@@ -59,5 +62,7 @@ void SettingsScene::createMenuList()
 
 void SettingsScene::menuSaveCallBack(Ref * pSender)
 {
-	Director::getInstance()->replaceScene(StartScene::createScene());
+	CocosDenshion::SimpleAudioEngine::getInstance()->
+		playEffect("SoundEffect/lay.wav");
+	this->removeFromParentAndCleanup(true);
 }

@@ -15,21 +15,13 @@ protected:
 class AudioControl : public MyAudioEngine
 {
 public:
-	virtual ~AudioControl();
-
 	virtual bool init() override;
-	virtual void update(float dt) override;
+
+	void createLabel(std::string & labelName);
 
 	CREATE_FUNC(AudioControl);
 private:
-	int _audioID;
-	bool _loopEnabled;
 	float _volume;
-	float _duration;
-	float _timeRatio;
-
-	void * _playItem;
-	bool _isStopped;
 };
 
 #endif // !__MY_AUDIO_ENGINE_H_

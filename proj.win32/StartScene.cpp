@@ -1,5 +1,6 @@
 #include"StartScene.h"
 
+#include"SimpleAudioEngine.h"
 #include"SettingsScene.h"
 #include"HelpScene.h"
 
@@ -23,16 +24,15 @@ bool StartScene::init()
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto frameCache = SpriteFrameCache::getInstance();
-	frameCache->addSpriteFramesWithFile(
-			"StartScene/StartSceneSprites.plist", "StartScene/StartSceneSprites.png");
-
 	auto backGround = Sprite::create("StartScene/StartSceneBG.png");
 	backGround->setScale(1.6f);
 	backGround->setPosition(visibleSize / 2);
 	this->addChild(backGround, 0);
 
 	this->createMenuList();
+
+	CocosDenshion::SimpleAudioEngine::getInstance()->
+		playBackgroundMusic("BackGround/Village.mp3", true);
 
 	return true;
 }
@@ -84,16 +84,24 @@ void StartScene::createMenuList()
 
 void StartScene::menuStartCallBack(Ref * pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->
+		playEffect("SoundEffect/lay.wav");
 }
 void StartScene::menuSettingsCallBack(Ref * pSender)
 {
-	Director::getInstance()->replaceScene(SettingsScene::createScene());
+	CocosDenshion::SimpleAudioEngine::getInstance()->
+		playEffect("SoundEffect/lay.wav");
+	this->addChild(SettingsScene::create(), 9999);
 }
 void StartScene::menuHelpCallBack(Ref * pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->
+		playEffect("SoundEffect/lay.wav");
 	this->addChild(HelpScene::create(), 9999);
 }
 void StartScene::menuCloseCallBack(Ref * pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->
+		playEffect("SoundEffect/lay.wav");
 	Director::getInstance()->end();
 }

@@ -1,4 +1,6 @@
 #include"LoadingScene.h"
+
+#include"SimpleAudioEngine.h"
 #include"StartScene.h"
 
 USING_NS_CC;
@@ -20,6 +22,10 @@ bool LoadingScene::init()
 	}
 
 	this->createProgressTimer();
+
+	this->loadSpriteFrame();
+	this->loadMusicAndEffect();
+
 	this->scheduleUpdate();
 
 	return true;
@@ -84,6 +90,23 @@ void LoadingScene::onEnterTransitionDidFinish()
 	_sourceToLoad = 100;
 	//进度条更新次数=100/需要加载的资源数量
 	_progressUpdate = 100 / static_cast<float>(_sourceToLoad);
-
 }
 
+void LoadingScene::loadSpriteFrame()
+{
+	auto spriteFrameCache = SpriteFrameCache::getInstance();
+
+	//StartScene
+	spriteFrameCache->addSpriteFramesWithFile(
+		"StartScene/StartSceneSprites.plist", "StartScene/StartSceneSprites.png");
+}
+void LoadingScene::loadMusicAndEffect()
+{
+	auto audioEngine = CocosDenshion::SimpleAudioEngine::getInstance();
+
+	//BackGround Music
+	audioEngine->preloadBackgroundMusic("BackGround/Village.mp3");
+
+	//Sound Effect
+	audioEngine->preloadEffect("SoundEffect/lay.wav");
+}

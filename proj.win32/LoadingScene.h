@@ -16,8 +16,11 @@ private:
 	void createProgressTimer();		//创建进度条
 	void progressTimerUpdate();		//更新进度条进度
 
+	void loadSpriteFrame();			//加载精灵帧
+	void loadMusicAndEffect();		//加载音乐音效
+
 	cocos2d::ProgressTimer * _progressTimer;	//进度条
 	float _progressUpdate;						//进度条更新次数
-	int _sourceToLoad;							//加载的资源数
+	int _sourceToLoad;					//加载的资源数
 };
 #endif // !__LOADING_SCENE_H_

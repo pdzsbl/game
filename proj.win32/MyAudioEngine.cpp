@@ -1,6 +1,6 @@
 #include"MyAudioEngine.h"
 
-#include"AudioEngine.h"
+#include"SimpleAudioEngine.h"
 #include"ui/UISlider.h"
 
 USING_NS_CC;
@@ -159,94 +159,52 @@ bool AudioControl::init()
 {
 	auto ret = MyAudioEngine::init();
 	
-	_audioID = AudioEngine::INVALID_AUDIO_ID;
-	_loopEnabled = false;
-	_volume = 1.0f;
-	_duration = AudioEngine::TIME_UNKNOWN;
-	_timeRatio = 0.0f;
-	_isStopped = false;
-
-	std::string fontFilePath = "fonts/impact.ttf";
-
-//	auto & layerSize = this->getContentSize();
-	auto & layerSize = Director::getInstance()->getVisibleSize();
-
-	auto playItem = TextButton::create("play", [&](TextButton* button) {
-		if (_audioID == AudioEngine::INVALID_AUDIO_ID) {
-			_audioID = AudioEngine::play2d("background.mp3", _loopEnabled, _volume);
-
-			if (_audioID != AudioEngine::INVALID_AUDIO_ID) {
-				_isStopped = false;
-
-				button->setEnabled(false);
-				AudioEngine::setFinishCallback(_audioID, [&](int id, const std::string & filePath) {
-					log("_audioID(%d), _isStopped:(%d), played over!!!", _audioID, _isStopped);
-
-					assert(!_isStopped); // Stop audio should not trigger finshed callback
-					_audioID = AudioEngine::INVALID_AUDIO_ID;
-					((TextButton*)_playItem)->setEnabled(true);
-				});
-			}
-		}
-	});
-	_playItem = playItem;
-	playItem->setPosition(layerSize.width * 0.25f, layerSize.height * 0.8f);
-	addChild(playItem);
-
-	auto stopItem = TextButton::create("stop", [&](TextButton* button) {
-		if (_audioID != AudioEngine::INVALID_AUDIO_ID) {
-			_isStopped = true;
-			AudioEngine::stop(_audioID);
-
-			_audioID = AudioEngine::INVALID_AUDIO_ID;
-			((TextButton*)_playItem)->setEnabled(true);
-		}
-	});
-	stopItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.8f);
-	addChild(stopItem);
-
-	auto pauseItem = TextButton::create("pause", [&](TextButton* button) {
-		if (_audioID != AudioEngine::INVALID_AUDIO_ID) {
-			AudioEngine::pause(_audioID);
-		}
-	});
-	pauseItem->setPosition(layerSize.width * 0.75f, layerSize.height * 0.8f);
-	addChild(pauseItem);
-
-	auto volumeSlider = SliderEx::create();
-	volumeSlider->setPercent(100);
-	volumeSlider->addEventListener([&](Ref* sender, Slider::EventType event) {
-		SliderEx *slider = dynamic_cast<SliderEx *>(sender);
-		_volume = slider->getRatio();
-		if (_audioID != AudioEngine::INVALID_AUDIO_ID) {
-			AudioEngine::setVolume(_audioID, _volume);
-		}
-	});
-	volumeSlider->setPosition(Vec2(layerSize.width * 0.5f, layerSize.height * 0.35f));
-	addChild(volumeSlider);
-
-	auto & volumeSliderPos = volumeSlider->getPosition();
-	auto & sliderSize = volumeSlider->getContentSize();
-	auto volumeLabel = Label::createWithTTF("volume:  ", fontFilePath, 32);
-	volumeLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
-	volumeLabel->setPosition(volumeSliderPos.x - sliderSize.width / 2, volumeSliderPos.y);
-	addChild(volumeLabel);
-
-	this->schedule(CC_CALLBACK_1(AudioControl::update, this), 0.1f, "update_key");
+	this->createLabel(std::string("BackGround Music"));
+	this->createLabel(std::string("Sound Effect"));
 
 	return ret;
 }
 
-void AudioControl::update(float dt)
+void AudioControl::createLabel(std::string & labelName)
 {
-	if (_audioID != AudioEngine::INVALID_AUDIO_ID) {
-		if (_duration == AudioEngine::TIME_UNKNOWN) {
-			_duration = AudioEngine::getDuration(_audioID);
+	_volume = 1.0f;
+
+	std::string fontFilePath = "fonts/impact.ttf";
+
+	auto layerSize = Director::getInstance()->getVisibleSize();
+
+	auto volumeSlider = SliderEx::create();
+	volumeSlider->setPercent(100);
+	volumeSlider->addEventListener([=](Ref* sender, Slider::EventType event) {
+		SliderEx *slider = dynamic_cast<SliderEx *>(sender);
+		_volume = slider->getRatio();
+
+		if (labelName == "BackGround Music") {
+			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(_volume);
 		}
+		else if (labelName == "Sound Effect") {
+			CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(_volume);
+		}
+	});
+	if (labelName == "BackGround Music") {
+		volumeSlider->setPosition(Point(layerSize.width*0.5f, layerSize.height*0.33f));
 	}
-}
+	else if (labelName == "Sound Effect") {
+		volumeSlider->setPosition(Point(layerSize.width*0.5f, layerSize.height*0.67f));
+	}
+	addChild(volumeSlider);
 
-AudioControl::~AudioControl()
-{
-}
+	auto & volumeSliderPos = volumeSlider->getPosition();
+	auto & sliderSize = volumeSlider->getContentSize();
+	auto volumeLabel = Label::createWithTTF("volume:", fontFilePath, 48);
+	volumeLabel->setColor(Color3B(255, 192, 168));
+	volumeLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+	volumeLabel->setPosition(volumeSliderPos.x - sliderSize.width / 2, volumeSliderPos.y);
+	addChild(volumeLabel);
 
+	auto backGroundLabel = Label::createWithTTF(labelName, fontFilePath, 48);
+	backGroundLabel->setColor(Color3B(255, 192, 168));
+	backGroundLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+	backGroundLabel->setPosition(volumeSliderPos.x, volumeSliderPos.y + sliderSize.height / 2);
+	addChild(backGroundLabel);
+}
