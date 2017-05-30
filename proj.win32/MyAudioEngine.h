@@ -29,7 +29,6 @@ private:
 	float _timeRatio;
 
 	void * _playItem;
-//	bool _updateTimeSlider;
 	bool _isStopped;
 };
 

@@ -2,16 +2,6 @@
 
 USING_NS_CC;
 
-Scene * HelpScene::createScene()
-{
-	auto scene = Scene::create();
-	auto layer = HelpScene::create();
-	
-	scene->addChild(layer);
-
-	return scene;
-}
-
 bool HelpScene::init()
 {
 	if (!Layer::init()) {
@@ -24,7 +14,7 @@ bool HelpScene::init()
 	auto backGround = Sprite::create("HelpScene/HelpSceneBG.png");
 	backGround->setScale(1.6f);
 	backGround->setPosition(visibleSize / 2);
-	backGround->setOpacity(100);
+	backGround->setOpacity(255);
 	this->addChild(backGround, 0);
 
 	auto backItem = MenuItemImage::create(
@@ -77,5 +67,5 @@ void HelpScene::createParagraph()
 
 void HelpScene::menuBackCallBack(Ref * pSender)
 {
-	Director::getInstance()->popScene();
+	this->removeFromParentAndCleanup(true);
 }

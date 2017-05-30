@@ -5,7 +5,6 @@
 
 class HelpScene :public cocos2d::Layer {
 public:
-	static cocos2d::Scene * createScene();		//createScene()
 	virtual bool init();						//显示一段话
 
 	void createParagraph();						//生成一段话的Label

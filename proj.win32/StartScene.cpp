@@ -79,7 +79,7 @@ void StartScene::createMenuList()
 	auto menu = Menu::createWithArray(buttons);
 	menu->setPosition(Point(visibleSize.width*0.5f, visibleSize.height*0.6f));
 	menu->alignItemsVertically();
-	this->addChild(menu);
+	this->addChild(menu, 1);
 }
 
 void StartScene::menuStartCallBack(Ref * pSender)
@@ -87,12 +87,11 @@ void StartScene::menuStartCallBack(Ref * pSender)
 }
 void StartScene::menuSettingsCallBack(Ref * pSender)
 {
-	Director::getInstance()->pushScene(SettingsScene::createScene());
+	Director::getInstance()->replaceScene(SettingsScene::createScene());
 }
 void StartScene::menuHelpCallBack(Ref * pSender)
 {
-	Director::getInstance()->pushScene(HelpScene::createScene());
-//	Director::getInstance()->replaceScene(HelpScene::createScene());
+	this->addChild(HelpScene::create(), 9999);
 }
 void StartScene::menuCloseCallBack(Ref * pSender)
 {

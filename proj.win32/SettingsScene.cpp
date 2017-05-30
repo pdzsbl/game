@@ -1,5 +1,6 @@
 #include"SettingsScene.h"
 
+#include"StartScene.h"
 #include"MyAudioEngine.h"
 
 USING_NS_CC;
@@ -58,5 +59,5 @@ void SettingsScene::createMenuList()
 
 void SettingsScene::menuSaveCallBack(Ref * pSender)
 {
-	Director::getInstance()->popScene();
+	Director::getInstance()->replaceScene(StartScene::createScene());
 }
