@@ -1,0 +1,5 @@
+修改附加包含目录，添加
+$(EngineRoot)
+..\proj.win32
+..\Classes
+
