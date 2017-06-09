@@ -84,24 +84,17 @@ void StartScene::createMenuList()
 
 void StartScene::menuStartCallBack(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->
-		playEffect("SoundEffect/lay.wav");
 }
 void StartScene::menuSettingsCallBack(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->
-		playEffect("SoundEffect/lay.wav");
 	this->addChild(SettingsScene::create(), 9999);
 }
 void StartScene::menuHelpCallBack(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->
-		playEffect("SoundEffect/lay.wav");
 	this->addChild(HelpScene::create(), 9999);
+	
 }
 void StartScene::menuCloseCallBack(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->
-		playEffect("SoundEffect/lay.wav");
 	Director::getInstance()->end();
 }

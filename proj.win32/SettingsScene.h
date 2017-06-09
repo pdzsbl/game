@@ -9,10 +9,11 @@ public:
 
 	virtual bool init();
 
-	void createMenuList();
+	void createSliders();
 
 	void menuSaveCallBack(cocos2d::Ref * pSender);
 
 	CREATE_FUNC(SettingsScene);
+private:
 };
 #endif // !__SETTINGS_SCENE_H

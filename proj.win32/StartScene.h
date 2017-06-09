@@ -16,5 +16,6 @@ public:
 	void menuCloseCallBack(cocos2d::Ref * pSender);			//Quit		Done
 
 	CREATE_FUNC(StartScene);							//create()
+
 };
 #endif // !__START_SCENE_H_

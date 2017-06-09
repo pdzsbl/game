@@ -73,7 +73,5 @@ void HelpScene::createParagraph()
 
 void HelpScene::menuBackCallBack(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->
-		playEffect("SoundEffect/lay.wav");
 	this->removeFromParentAndCleanup(true);
 }
